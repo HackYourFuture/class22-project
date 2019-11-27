@@ -9,8 +9,9 @@ const App = ({ auth: { user } }) => {
   if (!user) {
     return <Spinner />;
   }
+
   const username = user.name;
-  const chat = username ? <Chat /> : null;
+  const chat = username ? <Chat user={user} /> : null;
   return <Fragment>{chat}</Fragment>;
 };
 
