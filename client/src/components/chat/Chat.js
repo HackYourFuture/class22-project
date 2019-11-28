@@ -1,37 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { receiveUsers, receiveMessage } from '../../actions/chat';
+import { receiveUsers, receiveMessage, receiveUsername } from '../../actions/chat';
 import io from 'socket.io-client';
 import styles from './styles/ChatStyles';
 import UserList from './UserList';
 import Messages from './Messages';
 import Spinner from '../layout/Spinner';
 
-const socket = io();
+const socket = io('http://localhost:5000');
 
-const Chat = ({ auth, chat, receiveMessage, receiveUsers }) => {
+const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => {
+  const username = user.name;
+  useEffect(() => {
+    receiveUsername(username);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [username]);
+
   const [state, setState] = useState({});
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const chatSocket = () => {
-    const username = auth.user.name;
-
     // receive userlist
     socket.on('chat users', ({ room, users }) => {
       receiveUsers({ room, users });
     });
 
     // send join message
-    socket.emit('chat join', {
-      timestamp: new Date(),
-      username,
-      userID: auth.user._id,
-      room: 'general',
-    });
+    socket.emit(
+      'chat join',
+      {
+        timestamp: new Date(),
+        username,
+        userID: user._id,
+        room: 'general',
+      },
+      error => {
+        if (error) {
+          alert(error);
+        }
+      },
+    );
 
     // receive join message
     socket.on('chat join', msg => {
-      console.log(msg);
       receiveMessage(msg);
     });
 
@@ -42,7 +53,7 @@ const Chat = ({ auth, chat, receiveMessage, receiveUsers }) => {
 
     // receive message
     socket.on('chat message', msg => {
-      console.log('mes', msg);
+      console.log('chat message client', msg);
       receiveMessage(msg);
     });
 
@@ -53,7 +64,7 @@ const Chat = ({ auth, chat, receiveMessage, receiveUsers }) => {
       socket.emit('chat leave', {
         timestamp: new Date(),
         username,
-        userID: auth.user._id,
+        userID: user._id,
         room: 'general',
       });
     });
@@ -61,7 +72,7 @@ const Chat = ({ auth, chat, receiveMessage, receiveUsers }) => {
   useEffect(() => {
     chatSocket();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [socket]);
+  }, []);
 
   // update state from input
   const handleChange = e => {
@@ -70,9 +81,6 @@ const Chat = ({ auth, chat, receiveMessage, receiveUsers }) => {
 
   const handleClick = e => {
     e.preventDefault();
-
-    const username = chat.username;
-
     // send message
     socket.emit('chat message', {
       timestamp: new Date(),
@@ -89,7 +97,7 @@ const Chat = ({ auth, chat, receiveMessage, receiveUsers }) => {
     <div>
       <Messages messages={chat.messages} />
 
-      <form onSubmit={e => handleClick(e)}>
+      <form onSubmit={handleClick}>
         <input
           style={styles.input}
           name="message"
@@ -112,6 +120,7 @@ const Chat = ({ auth, chat, receiveMessage, receiveUsers }) => {
 Chat.propTypes = {
   receiveUsers: PropTypes.func.isRequired,
   receiveMessage: PropTypes.func.isRequired,
+  receiveUsername: PropTypes.func.isRequired,
   auth: PropTypes.object,
   chat: PropTypes.object,
 };
@@ -121,4 +130,4 @@ const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { receiveUsers, receiveMessage })(Chat);
+export default connect(mapStateToProps, { receiveUsers, receiveMessage, receiveUsername })(Chat);

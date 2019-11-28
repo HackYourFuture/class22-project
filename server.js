@@ -38,8 +38,12 @@ if (process.env.NODE_ENV === 'production') {
 io.on('connection', socket => {
   console.log('New WebSocket connection');
 
-  socket.on('chat join', msg => {
+  socket.on('chat join', (msg, callback) => {
     const { error, user } = addUser({ id: socket.id, ...msg });
+
+    if (error) {
+      return callback(error);
+    }
 
     socket.join(user.room);
 
@@ -54,9 +58,11 @@ io.on('connection', socket => {
       room: user.room,
       users: getUsersInRoom(user.room),
     });
+    callback();
   });
 
   socket.on('chat message', msg => {
+    console.log('msg listen', msg);
     const user = getUser(socket.id);
     io.to(user.room).emit('chat message', msg);
   });
