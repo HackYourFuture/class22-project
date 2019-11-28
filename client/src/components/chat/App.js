@@ -5,14 +5,17 @@ import Spinner from './../layout/Spinner';
 
 import Chat from './Chat';
 
-const App = ({ auth: { user } }) => {
+const App = ({ auth: { user }, chat }) => {
   if (!user) {
     return <Spinner />;
   }
 
+  if (!chat.userlist.length) {
+  }
+
   const username = user.name;
-  const chat = username ? <Chat user={user} /> : null;
-  return <Fragment>{chat}</Fragment>;
+  const chatt = username ? <Chat user={user} /> : null;
+  return <Fragment>{chatt}</Fragment>;
 };
 
 App.propTypes = {
@@ -22,6 +25,7 @@ App.propTypes = {
 const mapStateToProps = state => ({
   user: state.user,
   auth: state.auth,
+  chat: state.chat,
 });
 
 export default connect(mapStateToProps)(App);
