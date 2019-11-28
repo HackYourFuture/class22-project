@@ -24,18 +24,25 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
     socket.on('chat users', ({ room, users }) => {
       receiveUsers({ room, users });
     });
-    console.log(username);
+
     // send join message
-    socket.emit('chat join', {
-      timestamp: new Date(),
-      username,
-      userID: user._id,
-      room: 'general',
-    });
+    socket.emit(
+      'chat join',
+      {
+        timestamp: new Date(),
+        username,
+        userID: user._id,
+        room: 'general',
+      },
+      error => {
+        if (error) {
+          alert(error);
+        }
+      },
+    );
 
     // receive join message
     socket.on('chat join', msg => {
-      console.log('chat join', msg);
       receiveMessage(msg);
     });
 
@@ -46,7 +53,7 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
 
     // receive message
     socket.on('chat message', msg => {
-      console.log('chat message', msg);
+      console.log('chat message client', msg);
       receiveMessage(msg);
     });
 
@@ -65,7 +72,7 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
   useEffect(() => {
     chatSocket();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [socket]);
+  }, []);
 
   // update state from input
   const handleChange = e => {
@@ -74,7 +81,6 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
 
   const handleClick = e => {
     e.preventDefault();
-
     // send message
     socket.emit('chat message', {
       timestamp: new Date(),
@@ -91,7 +97,7 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
     <div>
       <Messages messages={chat.messages} />
 
-      <form onSubmit={e => handleClick(e)}>
+      <form onSubmit={handleClick}>
         <input
           style={styles.input}
           name="message"
