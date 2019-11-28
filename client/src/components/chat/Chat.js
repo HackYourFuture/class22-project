@@ -32,13 +32,13 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
         timestamp: new Date(),
         username,
         userID: user._id,
-        room: 'general',
+        room: 'general'
       },
       error => {
         if (error) {
           alert(error);
         }
-      },
+      }
     );
 
     // receive join message
@@ -65,7 +65,7 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
         timestamp: new Date(),
         username,
         userID: user._id,
-        room: 'general',
+        room: 'general'
       });
     });
   };
@@ -85,17 +85,17 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
     socket.emit('chat message', {
       timestamp: new Date(),
       username,
-      message: state.message,
+      message: state.message
     });
 
     setState({
-      message: null,
+      message: null
     });
   };
 
   return (
     <div>
-      <Messages messages={chat.messages} />
+      <Messages messages={chat.messages} username={user.name} />
 
       <form onSubmit={handleClick}>
         <input
@@ -122,12 +122,12 @@ Chat.propTypes = {
   receiveMessage: PropTypes.func.isRequired,
   receiveUsername: PropTypes.func.isRequired,
   auth: PropTypes.object,
-  chat: PropTypes.object,
+  chat: PropTypes.object
 };
 
 const mapStateToProps = state => ({
   chat: state.chat,
-  auth: state.auth,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { receiveUsers, receiveMessage, receiveUsername })(Chat);

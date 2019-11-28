@@ -2,11 +2,11 @@ import React, { useEffect, useRef } from 'react';
 import moment from 'moment';
 import styles from './styles/MessagesStyles';
 
-const Messages = ({ messages }) => {
+const Messages = ({ username, messages }) => {
   const chat = useRef(null);
 
   const chatMessages = messages.map((chat, key) =>
-    chat.username ? (
+    chat.username === username ? (
       <li style={styles.li} key={key}>
         <p style={styles.timestampText}>{moment(chat.timestamp).format('LLL')}</p>
         <p style={styles.messageText}>
