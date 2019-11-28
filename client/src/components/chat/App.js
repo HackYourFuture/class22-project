@@ -15,12 +15,12 @@ const App = ({ auth: { user } }) => {
 };
 
 App.propTypes = {
-  auth: PropTypes.object,
+  auth: PropTypes.object
 };
 
 const mapStateToProps = state => ({
   user: state.user,
-  auth: state.auth,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps)(App);
