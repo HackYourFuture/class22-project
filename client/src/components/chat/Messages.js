@@ -5,14 +5,23 @@ import styles from './styles/MessagesStyles';
 const Messages = ({ messages }) => {
   const chat = useRef(null);
 
-  const chatMessages = messages.map((chat, key) => (
-    <li style={styles.li} key={key}>
-      <p style={styles.timestampText}>{moment(chat.timestamp).format('D.M.YYYY HH:mm:ss')}</p>
-      <p style={styles.messageText}>
-        {chat.username}: {chat.message}
-      </p>
-    </li>
-  ));
+  const chatMessages = messages.map((chat, key) =>
+    chat.username ? (
+      <li style={styles.li} key={key}>
+        <p style={styles.timestampText}>{moment(chat.timestamp).format('LLL')}</p>
+        <p style={styles.messageText}>
+          {chat.username}: {chat.message}
+        </p>
+      </li>
+    ) : (
+      <li style={styles.li1} key={key}>
+        <p style={styles.timestampText}>{moment(chat.timestamp).format('LLL')}</p>
+        <p style={styles.messageText}>
+          {chat.username}: {chat.message}
+        </p>
+      </li>
+    )
+  );
 
   useEffect(() => {
     if (chat.current) {

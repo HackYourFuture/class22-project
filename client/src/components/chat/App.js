@@ -19,13 +19,14 @@ const App = ({ auth: { user }, chat }) => {
 };
 
 App.propTypes = {
-  auth: PropTypes.object,
+  auth: PropTypes.object
 };
 
 const mapStateToProps = state => ({
   user: state.user,
   auth: state.auth,
-  chat: state.chat,
+  chat: state.chat
+
 });
 
 export default connect(mapStateToProps)(App);
