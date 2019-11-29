@@ -18,7 +18,7 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
   }, [username]);
 
   const [formData, setFormData] = useState({
-    text: '',
+    text: ''
   });
   const { text } = formData;
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -35,13 +35,13 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
         timestamp: new Date(),
         username,
         userID: user._id,
-        room: 'general',
+        room: 'general'
       },
       error => {
         if (error) {
           return;
         }
-      },
+      }
     );
 
     // receive join message
@@ -67,7 +67,7 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
         timestamp: new Date(),
         username,
         userID: user._id,
-        room: 'general',
+        room: 'general'
       });
     });
   };
@@ -87,7 +87,7 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
     socket.emit('chat message', {
       timestamp: new Date(),
       username,
-      message: text,
+      message: text
     });
 
     setFormData({ text: '' });
@@ -99,7 +99,7 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
         <div className="row px-lg-2 px-2">
           <div className="col-sm-9 col-md-9 col-xl-8 pl-md-3 px-lg-auto px-0 chat-message-container">
             <div className="chat-message">
-              <Messages messages={chat.messages} />
+              <Messages messages={chat.messages} username={user.name} />
             </div>
 
             <form onSubmit={onSubmit}>
@@ -140,12 +140,12 @@ Chat.propTypes = {
   receiveMessage: PropTypes.func.isRequired,
   receiveUsername: PropTypes.func.isRequired,
   auth: PropTypes.object,
-  chat: PropTypes.object,
+  chat: PropTypes.object
 };
 
 const mapStateToProps = state => ({
   chat: state.chat,
-  auth: state.auth,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { receiveUsers, receiveMessage, receiveUsername })(Chat);
