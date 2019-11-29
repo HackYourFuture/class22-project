@@ -639,7 +639,8 @@ button {
 .guest-chat-box {
   float: right;
   clear: left;
-  
+}
+
 .chat-body {
   padding: 1.5rem !important;
   width: 20rem;
@@ -672,5 +673,4 @@ div.header {
 
 .chat-footer p {
   color: greenyellow;
-
 }
