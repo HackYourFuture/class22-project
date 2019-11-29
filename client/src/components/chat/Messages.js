@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import moment from 'moment';
 
-const Messages = ({ messages }) => {
+const Messages = ({ username, messages }) => {
   const chat = useRef(null);
 
   const chatMessages = messages.map((chat, key) => (
