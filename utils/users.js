@@ -1,6 +1,6 @@
 const users = [];
 
-const addUser = ({ id, username, room, userID }) => {
+const addUser = ({ id, username, room, userID, userAvatar }) => {
   //validate the data
   if (!username || !room) {
     return {
@@ -20,7 +20,7 @@ const addUser = ({ id, username, room, userID }) => {
   }
 
   // Store user
-  const user = { id, username, room, userID };
+  const user = { id, username, room, userID, userAvatar };
   users.push(user);
   return { user };
 };

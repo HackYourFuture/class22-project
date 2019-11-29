@@ -4,6 +4,7 @@ import moment from 'moment';
 const Messages = ({ username, messages }) => {
   const chat = useRef(null);
 
+
   const chatMessages = messages.map((chat, key) =>
     chat.username === username ? (
       <li className={('d-flex justify-content-start mb-4', 'user-chat-box')} key={key}>
@@ -21,6 +22,21 @@ const Messages = ({ username, messages }) => {
           </div>
           <hr className="w-100" />
           <p className="mb-0">{chat.message}</p>
+
+  const chatMessages = messages.map((chat, key) => (
+    <li className="d-flex justify-content-start mb-4" key={key}>
+      <img
+        src={chat.userAvatar}
+        alt="avatar"
+        className="avatar rounded-circle mr-2 ml-lg-3 ml-0 z-depth-1"
+      />
+      <div className="chat-body white p-3 ml-2 z-depth-1">
+        <div className="header">
+          <strong className="primary-font">{chat.username}</strong>
+          <small className="pull-right text-muted">
+            <i className="far fa-clock"></i> {moment(chat.timestamp).fromNow()}
+          </small>
+
         </div>
       </li>
     ) : (
