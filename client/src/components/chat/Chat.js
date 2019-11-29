@@ -35,9 +35,8 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
         timestamp: new Date(),
         username,
         userID: user._id,
-        room: 'general'
         userAvatar: user.avatar,
-        room: 'general',
+        room: 'general'
       },
       error => {
         if (error) {
@@ -89,10 +88,8 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
     socket.emit('chat message', {
       timestamp: new Date(),
       username,
-      message: text
       message: text,
-      userAvatar: user.avatar,
-
+      userAvatar: user.avatar
     });
 
     setFormData({ text: '' });
