@@ -17,7 +17,10 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username]);
 
-  const [state, setState] = useState({});
+  const [formData, setFormData] = useState({
+    text: '',
+  });
+  const { text } = formData;
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const chatSocket = () => {
     // receive userlist
@@ -32,13 +35,13 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
         timestamp: new Date(),
         username,
         userID: user._id,
-        room: 'general'
+        room: 'general',
       },
       error => {
         if (error) {
-          alert(error);
+          return;
         }
-      }
+      },
     );
 
     // receive join message
@@ -53,7 +56,6 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
 
     // receive message
     socket.on('chat message', msg => {
-      console.log('chat message client', msg);
       receiveMessage(msg);
     });
 
@@ -65,7 +67,7 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
         timestamp: new Date(),
         username,
         userID: user._id,
-        room: 'general'
+        room: 'general',
       });
     });
   };
@@ -75,44 +77,60 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
   }, []);
 
   // update state from input
-  const handleChange = e => {
-    setState({ [e.target.name]: e.target.value });
+  const onChange = e => {
+    setFormData({ [e.target.name]: e.target.value });
   };
 
-  const handleClick = e => {
+  const onSubmit = e => {
     e.preventDefault();
     // send message
     socket.emit('chat message', {
       timestamp: new Date(),
       username,
-      message: state.message
+      message: text,
     });
 
-    setState({
-      message: null
-    });
+    setFormData({ text: '' });
   };
 
   return (
-    <div>
-      <Messages messages={chat.messages} username={user.name} />
+    <div className="card grey lighten-3 chat-room">
+      <div className="card-body">
+        <div className="row px-lg-2 px-2">
+          <div className="col-sm-9 col-md-9 col-xl-8 pl-md-3 px-lg-auto px-0 chat-message-container">
+            <div className="chat-message">
+              <Messages messages={chat.messages} />
+            </div>
 
-      <form onSubmit={handleClick}>
-        <input
-          style={styles.input}
-          name="message"
-          type="text"
-          placeholder="Write something"
-          value={state.message}
-          onChange={handleChange}
-          autoFocus
-        />
+            <form onSubmit={onSubmit}>
+              <input
+                style={styles.input}
+                name="text"
+                type="text"
+                placeholder="Write something"
+                value={text}
+                onChange={onChange}
+                autoComplete="false"
+                autoFocus
+                required
+              />
 
-        <button style={styles.button} type="submit" className="btn btn-default">
-          Send
-        </button>
-      </form>
-      {chat.userlist.users ? <UserList userlist={chat.userlist.users} /> : <Spinner />}
+              <button
+                style={styles.button}
+                type="submit"
+                className="btn btn-default"
+                value="submit"
+              >
+                Send
+              </button>
+            </form>
+          </div>
+          <div className="col-sm-3 col-md-3 col-xl-4 px-0 chat-user-container">
+            <h6 className="font-weight-bold mb-3 text-center text-lg-left">Members</h6>
+            {chat.userlist.users ? <UserList userlist={chat.userlist.users} /> : <Spinner />}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -122,12 +140,12 @@ Chat.propTypes = {
   receiveMessage: PropTypes.func.isRequired,
   receiveUsername: PropTypes.func.isRequired,
   auth: PropTypes.object,
-  chat: PropTypes.object
+  chat: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
   chat: state.chat,
-  auth: state.auth
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { receiveUsers, receiveMessage, receiveUsername })(Chat);
