@@ -12,7 +12,7 @@ export default function(state = initialState, action) {
     case MESSAGE_ADD: {
       return {
         ...state,
-        messages: [...state.messages, payload],
+        messages: Array.from(new Set([...state.messages, payload])),
       };
     }
     case USERLIST_ADD: {

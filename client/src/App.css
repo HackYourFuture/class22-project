@@ -575,3 +575,52 @@ button {
     padding: 0.3rem 0.4rem;
   }
 }
+
+/* Live Chat Component Styles */
+
+.chat-user-container {
+  background-color: #343a40;
+  width: 20%;
+  position: fixed;
+  top: 60px;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+}
+.active.grey {
+  background-color: #454b52;
+}
+.chat-user {
+  color: white;
+  text-transform: capitalize;
+}
+
+.chat.room {
+  background-color: #eeeeee !important;
+}
+.chat-room .friend-list li {
+  border-bottom: 1px solid #e0e0e0;
+}
+.chat-room .friend-list li:last-of-type {
+  border-bottom: none;
+}
+
+.chat-room img.avatar {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50% !important;
+}
+
+.chat-room .text-small {
+  font-size: 0.95rem;
+}
+
+.chat-room .text-smaller {
+  font-size: 0.75rem;
+}
+
+.z-depth-1 {
+  margin-left: 0.5rem !important;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12) !important;
+}
