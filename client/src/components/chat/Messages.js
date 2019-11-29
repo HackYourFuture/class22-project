@@ -10,13 +10,13 @@ const Messages = ({ username, messages }) => {
         <div className="chat-body white p-3 ml-2 z-depth-1">
           <div className="header">
             <img
-              src="https://via.placeholder.com/150"
+              src={chat.userAvatar}
               alt="avatar"
               className="avatar rounded-circle mr-2 ml-lg-3 ml-0 z-depth-1"
             />
             <strong className="primary-font">{chat.username}</strong>
             <small className="pull-right text-muted">
-              <i className="far fa-clock"></i> {moment(chat.timestamp).format('D.M.YYYY HH:mm:ss')}
+              <i className="far fa-clock"></i> {moment(chat.timestamp).fromNow()}
             </small>
           </div>
           <hr className="w-100" />
