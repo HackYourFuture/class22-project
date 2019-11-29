@@ -49,11 +49,14 @@ io.on('connection', socket => {
 
     socket.emit('chat join', {
       username: 'Admin',
-      message: `${user.username} welcome to group chat!`,
+      message: `${user.username}, welcome to group chat!`,
+      userAvatar: '//www.gravatar.com/avatar/503865d0bf3e8c4613589ea9a60910a7?s=200&r=pg&d=mm',
     });
-    socket.broadcast
-      .to(user.room)
-      .emit('chat join', { username: user.username, message: 'has joined!' });
+    socket.broadcast.to(user.room).emit('chat join', {
+      username: 'Hey',
+      message: user.username + ' has joined!',
+      userAvatar: '//www.gravatar.com/avatar/503865d0bf3e8c4613589ea9a60910a7?s=200&r=pg&d=mm',
+    });
     io.to(user.room).emit('chat users', {
       room: user.room,
       users: getUsersInRoom(user.room),
@@ -70,7 +73,11 @@ io.on('connection', socket => {
     const user = removeUser(socket.id);
 
     if (user) {
-      io.to(user.room).emit('chat leave', { username: user.username, message: 'has left!' });
+      io.to(user.room).emit('chat leave', {
+        username: 'Hey',
+        message: user.username + ', has left!',
+        userAvatar: '//www.gravatar.com/avatar/503865d0bf3e8c4613589ea9a60910a7?s=200&r=pg&d=mm',
+      });
       io.to(user.room).emit('chat users', {
         room: user.room,
         users: getUsersInRoom(user.room),

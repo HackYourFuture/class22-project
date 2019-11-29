@@ -13,7 +13,7 @@ const socket = io('http://localhost:5000');
 const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => {
   const username = user.name;
   useEffect(() => {
-    receiveUsername(username);
+    receiveUsername([username, user._id]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username]);
 
@@ -35,6 +35,7 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
         timestamp: new Date(),
         username,
         userID: user._id,
+        userAvatar: user.avatar,
         room: 'general',
       },
       error => {
@@ -88,6 +89,7 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
       timestamp: new Date(),
       username,
       message: text,
+      userAvatar: user.avatar,
     });
 
     setFormData({ text: '' });
@@ -127,7 +129,7 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
           </div>
           <div className="col-sm-3 col-md-3 col-xl-4 px-0 chat-user-container">
             <h6 className="font-weight-bold mb-3 text-center text-lg-left">Members</h6>
-            {chat.userlist.users ? <UserList userlist={chat.userlist.users} /> : <Spinner />}
+            {chat.userlist.users ? <UserList chatData={chat} /> : <Spinner />}
           </div>
         </div>
       </div>

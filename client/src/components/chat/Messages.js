@@ -7,7 +7,7 @@ const Messages = ({ username, messages }) => {
   const chatMessages = messages.map((chat, key) => (
     <li className="d-flex justify-content-start mb-4" key={key}>
       <img
-        src="https://via.placeholder.com/150"
+        src={chat.userAvatar}
         alt="avatar"
         className="avatar rounded-circle mr-2 ml-lg-3 ml-0 z-depth-1"
       />
@@ -15,7 +15,7 @@ const Messages = ({ username, messages }) => {
         <div className="header">
           <strong className="primary-font">{chat.username}</strong>
           <small className="pull-right text-muted">
-            <i className="far fa-clock"></i> {moment(chat.timestamp).format('D.M.YYYY HH:mm:ss')}
+            <i className="far fa-clock"></i> {moment(chat.timestamp).fromNow()}
           </small>
         </div>
         <hr className="w-100" />
