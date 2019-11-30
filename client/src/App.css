@@ -666,15 +666,9 @@ div.header {
 }
 
 .user-chat-box {
-  float: left;
-  clear: right;
-  width: 50%;
-  margin: 3%;
+  flex-flow: row;
 }
 
 .guest-chat-box {
-  float: right;
-  clear: left;
-  width: 50%;
-  margin: 3%;
+  flex-flow: row-reverse;
 }
