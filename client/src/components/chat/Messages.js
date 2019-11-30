@@ -5,7 +5,14 @@ const Messages = ({ username, messages }) => {
   const chat = useRef(null);
 
   const chatMessages = messages.map((chat, key) => (
-    <li className="d-flex justify-content-start mb-4" key={key}>
+    <li
+      className={
+        chat.username === username
+          ? 'd-flex justify-content-start mb-4 user-chat-box'
+          : 'd-flex justify-content-start mb-4 guest-chat-box'
+      }
+      key={key}
+    >
       <img
         src={chat.userAvatar}
         alt="avatar"

@@ -101,7 +101,7 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
         <div className="row px-lg-2 px-2">
           <div className="col-sm-9 col-md-9 col-xl-8 pl-md-3 px-lg-auto px-0 chat-message-container">
             <div className="chat-message">
-              <Messages messages={chat.messages} />
+              <Messages messages={chat.messages} username={username} />
             </div>
 
             <form onSubmit={onSubmit}>

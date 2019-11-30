@@ -664,3 +664,17 @@ div.header {
 .chat-footer p {
   color: greenyellow;
 }
+
+.user-chat-box {
+  float: left;
+  clear: right;
+  width: 50%;
+  margin: 3%;
+}
+
+.guest-chat-box {
+  float: right;
+  clear: left;
+  width: 50%;
+  margin: 3%;
+}
