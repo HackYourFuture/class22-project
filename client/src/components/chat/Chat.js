@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { receiveUsers, receiveMessage, receiveUsername } from '../../actions/chat';
 import io from 'socket.io-client';
-import styles from './styles/ChatStyles';
 import UserList from './UserList';
 import Messages from './Messages';
 import Spinner from '../layout/Spinner';
@@ -106,9 +105,12 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
 
             <form onSubmit={onSubmit}>
               <input
-                style={styles.input}
+                className="chat-input"
                 name="text"
                 type="text"
+                cols="30"
+                rows="5"
+                maxlength="400"
                 placeholder="Write something"
                 value={text}
                 onChange={onChange}
@@ -116,13 +118,7 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
                 autoFocus
                 required
               />
-
-              <button
-                style={styles.button}
-                type="submit"
-                className="btn btn-default"
-                value="submit"
-              >
+              <button className="chat-send-button" type="submit" value="submit">
                 Send
               </button>
             </form>
