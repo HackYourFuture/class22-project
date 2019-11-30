@@ -110,7 +110,7 @@ const Chat = ({ user, chat, receiveMessage, receiveUsers, receiveUsername }) => 
                 type="text"
                 cols="30"
                 rows="5"
-                maxlength="400"
+                maxLength="400"
                 placeholder="Write something"
                 value={text}
                 onChange={onChange}
