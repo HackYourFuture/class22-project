@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import Spinner from "../layout/Spinner";
 import { connect } from "react-redux";
 import { getProfileById } from "../../actions/profile";
+import { setAlert } from "../../actions/alert";
+import { acceptFriendRequest } from "../../actions/auth";
 
 const RequestItem = ({
   getProfileById,
@@ -16,11 +19,13 @@ const RequestItem = ({
     },
     loading
   },
+  auth,
   id
 }) => {
   useEffect(() => {
-    getProfileById(id.toString());
-  }, [getProfileById]);
+    getProfileById(id);
+  }, [getProfileById, id]);
+  console.log(id);
   return (
     <div className='profile bg-light'>
       <img src={avatar} alt='' className='round-img' />
@@ -33,6 +38,13 @@ const RequestItem = ({
         <Link to={`/profile/${_id}`} className='btn btn-primary'>
           View Profile
         </Link>
+        <button
+          className='btn btn-primary'
+          onClick={() => acceptFriendRequest(id)}
+        >
+          Confirm
+        </button>
+        <button className='btn btn-danger'>Reject</button>
       </div>
       <ul>
         {skills.slice(0, 4).map((skill, index) => (
@@ -47,10 +59,15 @@ const RequestItem = ({
 
 RequestItem.propTypes = {
   profile: PropTypes.object.isRequired,
-  getProfileById: PropTypes.func.isRequired
+  getProfileById: PropTypes.func.isRequired,
+  acceptFriendRequest: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
-  profile: state.profile
+  profile: state.profile,
+  auth: state.auth
 });
 
-export default connect(mapStateToProps, { getProfileById })(RequestItem);
+export default connect(mapStateToProps, {
+  getProfileById,
+  acceptFriendRequest
+})(RequestItem);

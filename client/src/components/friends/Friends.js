@@ -8,36 +8,27 @@ import FriendItem from "./FriendItem";
 import RequestItem from "./RequestItem";
 import WaitingItem from "./WaitingItem";
 
-const Friends = ({ auth: { user, loading }, loadUser }) => {
-  useEffect(() => {
-    loadUser();
-  }, [loadUser]);
+const Friends = ({ auth: { user, loading } }) => {
   return loading && user === null ? (
     <Spinner />
   ) : (
     <Fragment>
       <h2 className='my-2'>My Friends</h2>
-      {user.friendsList.length > 0 ? (
+      {/* {user.friendsList.length > 0 ? (
         user.friendsList.map(friend => (
-          <FriendItem key={friend._id} id={friend.friendId} />
+          <FriendItem key={friend._id} id={friend.friendId} profile={profile} />
         ))
       ) : (
-        <h4>No profiles found...</h4>
-      )}
+        <></>
+      )} */}
       <h2 className='my-2'>My Requests</h2>
-      {user.request.length > 0 ? (
+      {/* {user.request.length > 0 ? (
         user.request.map(req => <RequestItem key={req._id} id={req.userId} />)
       ) : (
-        <h4>No profiles found...</h4>
-      )}
+        <></>
+      )} */}
       <h2 className='my-2'>My Waiting List</h2>
-      {user.sentRequest.length > 0 ? (
-        user.sentRequest.map(req => (
-          <WaitingItem key={req._id} id={req.userId} />
-        ))
-      ) : (
-        <h4>No profiles found...</h4>
-      )}
+      {user.sentRequest.length > 0 ? <WaitingItem /> : <></>}
     </Fragment>
   );
 };
