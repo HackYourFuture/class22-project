@@ -14,25 +14,31 @@ const RequestItem = ({
     <Spinner />
   ) : (
     user.request.map(req => (
-      <div className='profile bg-light' key={req._id}>
+      <div className='friend-card bg-light my-1'>
         <img src={req.avatar} alt='' className='round-img' />
-        <div>
-          <h2>{req.username}</h2>
-
-          <Link to={`/profile/${req.userId}`} className='btn btn-primary'>
-            View Profile
-          </Link>
+        <div className='friend-name-card m-1 p-1'>
+          <p className='my-1'>
+            <i className='fas fa-user-plus' /> {"  "}
+            {req.username}
+          </p>
+          <Link
+            to={`/profile/${req.userId}`}
+            className='btn btn-primary'
+          ></Link>
+        </div>
+        <div className='m'>
           <button
-            className=' btn btn-success'
+            className='btn btn-success m'
             onClick={() => acceptFriendRequest(req.userId)}
           >
-            Confirm
+            <i className='fa fa-thumbs-up'></i>
+            {"  "}Confirm
           </button>
           <button
-            className='btn btn-danger'
+            className='btn btn-danger m'
             onClick={() => cancelFriendRequest(req.userId)}
           >
-            Not Now
+            <i className='fa fa-thumbs-down'></i> Reject
           </button>
         </div>
       </div>
