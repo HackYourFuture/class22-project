@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 const DashboardActions = () => {
   return (
@@ -12,6 +12,9 @@ const DashboardActions = () => {
       </Link>
       <Link to='/add-education' className='btn btn-light'>
         <i className='fas fa-graduation-cap text-primary' /> Add Education
+      </Link>
+      <Link to='/friends' className='btn btn-light'>
+        <i className='fas fa-user-friends text-primary' /> Friends
       </Link>
     </div>
   );

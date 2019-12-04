@@ -125,7 +125,6 @@ export const acceptFriendRequest = id => async dispatch => {
     dispatch(setAlert(err.response.data.msg, 'danger'));
   }
 };
-
 // Cancel Friend Request api/profile/friend/:senderId
 export const cancelFriendRequest = id => async dispatch => {
   try {
@@ -136,7 +135,6 @@ export const cancelFriendRequest = id => async dispatch => {
     dispatch(setAlert(err.response.data.msg, 'danger'));
   }
 };
-
 // Remove Friend api/profile/friend/:senderId
 export const removeFriend = id => async dispatch => {
   try {

@@ -14,10 +14,9 @@ const Post = require('../../models/Post');
 // @access   Private
 router.get('/me', auth, async (req, res) => {
   try {
-    const profile = await Profile.findOne({ user: req.user.id }).populate('user', [
-      'name',
-      'avatar',
-    ]);
+    const profile = await Profile.findOne({
+      user: req.user.id,
+    }).populate('user', ['name', 'avatar']);
 
     if (!profile) {
       return res.status(400).json({ msg: 'There is no profile for this user' });
@@ -421,6 +420,8 @@ router.post('/friend/:id', auth, async (req, res) => {
       sender.sentRequest.push({
         userId: req.params.id,
         username: receiver.name,
+        // added avatar
+        avatar: receiver.avatar,
       });
 
       await sender.save();
@@ -428,12 +429,16 @@ router.post('/friend/:id', auth, async (req, res) => {
       receiver.request.push({
         userId: req.user.id,
         username: sender.name,
+        // added avatar
+        avatar: sender.avatar,
       });
       // Increment total request in the receiver database
       receiver.totalRequest += 1;
 
       await receiver.save();
-      return res.json({ msg: `Your friend request is successfully sent to ${receiver.name}` }); // @Todo
+      return res.json({
+        msg: `Your friend request is successfully sent to ${receiver.name}`,
+      }); // @Todo
     }
 
     return res.status(404).json({ msg: 'Not found' });
@@ -472,6 +477,8 @@ router.put('/friend/:senderId', auth, async (req, res) => {
       receiver.friendsList.push({
         friendId: req.params.senderId,
         friendName: sender.name,
+        // add avatar
+        avatar: sender.avatar,
       });
       // Remove sender info from Receiver request database because they are going to be friend
       const getSenderId = receiver.request
@@ -485,6 +492,8 @@ router.put('/friend/:senderId', auth, async (req, res) => {
       sender.friendsList.push({
         friendId: req.user.id,
         friendName: receiver.name,
+        // add avatar
+        avatar: receiver.avatar,
       });
       // Remove Receiver info from Sender senrRequest database because they are going to be friend
       const getReceiverId = sender.sentRequest
@@ -542,7 +551,9 @@ router.patch('/friend/:senderId', auth, async (req, res) => {
 
       sender.sentRequest.splice(getReceiverId, 1);
       await sender.save();
-      return res.json({ msg: `You have rejected ${sender.name} friend request` }); // @Todo
+      return res.json({
+        msg: `You have rejected ${sender.name} friend request`,
+      }); // @Todo
     }
     return res.status(500).json({ msg: 'Server error' });
   } catch (err) {
