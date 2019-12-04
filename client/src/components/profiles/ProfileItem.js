@@ -1,10 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { sendFriendRequest } from "../../actions/auth";
-import moment from "moment";
-import Moment from "react-moment";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { sendFriendRequest } from '../../actions/auth';
+import moment from 'moment';
+import Moment from 'react-moment';
 
 const ProfileItem = ({
   profile: {
@@ -12,10 +12,10 @@ const ProfileItem = ({
     status,
     company,
     location,
-    skills
+    skills,
   },
   auth: { user, loading, isAuthenticated },
-  sendFriendRequest
+  sendFriendRequest,
 }) => {
   const Button = () => {
     const isFriend = user.friendsList.filter(friend => friend.friendId === _id);
@@ -26,31 +26,29 @@ const ProfileItem = ({
     if (isAuthenticated) {
       if (isFriend.length > 0) {
         return (
-          <h4 className='text-primary'>
-            {" "}
-            friends since:{" "}
-            <Moment format='YYYY/MM/DD'>{moment.utc(isFriend.date)}</Moment>
-          </h4>
+          <p className="text-primary my-1">
+            <i class="fas fa-clock"></i> Friends since:{' '}
+            <Moment format="DD/MM/YYYY HH:mm:ss">{moment.utc(isFriend.date)}</Moment>
+          </p>
         );
       }
 
       if (isRequested.length > 0) {
         return (
-          <h4 className='text-primary'>
-            {" "}
-            Requested at:{" "}
-            <Moment format='YYYY/MM/DD'>{moment.utc(isRequested.date)}</Moment>
-          </h4>
+          <p className="text-primary my-1">
+            <i class="fas fa-clock"></i> Requested at:{' '}
+            <Moment format="DD/MM/YYYY HH:mm:ss">{moment.utc(isRequested.date)}</Moment>
+          </p>
         );
       }
 
       if (isSent.length > 0) {
         return (
-          <h4 className='text-primary'>
-            {" "}
-            Request sent at:{" "}
-            <Moment format='YYYY/MM/DD'>{moment.utc(isSent.date)}</Moment>
-          </h4>
+          <p className="text-primary my-1">
+            {' '}
+            <i class="fas fa-clock"></i> Request sent at: {'   '}
+            <Moment format="DD/MM/YYYY HH:mm:ss">{moment.utc(isSent.date)}</Moment>
+          </p>
         );
       }
       console.log(isRequested);
@@ -61,12 +59,8 @@ const ProfileItem = ({
       }
 
       return (
-        <button
-          className='btn btn-danger'
-          onClick={() => sendFriendRequest(_id)}
-        >
-          {" "}
-          Send Friend Request
+        <button className="btn btn-success" onClick={() => sendFriendRequest(_id)}>
+          <i class="fas fa-user-plus"></i> Send Friend Request
         </button>
       );
     }
@@ -74,23 +68,23 @@ const ProfileItem = ({
   };
 
   return (
-    <div className='profile bg-light'>
-      <img src={avatar} alt='' className='round-img' />
+    <div className="profile bg-light">
+      <img src={avatar} alt="" className="round-img" />
       <div>
         <h2>{name}</h2>
         <p>
           {status} {company && <span> at {company}</span>}
         </p>
-        <p className='my-1'>{location && <span>{location}</span>}</p>
-        <Link to={`/profile/${_id}`} className='btn btn-primary'>
+        <p className="my-1">{location && <span>{location}</span>}</p>
+        <Link to={`/profile/${_id}`} className="btn btn-primary">
           View Profile
         </Link>
         <Button />
       </div>
       <ul>
         {skills.slice(0, 4).map((skill, index) => (
-          <li key={index} className='text-primary'>
-            <i className='fas fa-check' /> {skill}
+          <li key={index} className="text-primary">
+            <i className="fas fa-check" /> {skill}
           </li>
         ))}
       </ul>
@@ -101,10 +95,10 @@ const ProfileItem = ({
 ProfileItem.propTypes = {
   profile: PropTypes.object.isRequired,
   isAuthenticated: PropTypes.bool,
-  sendFriendRequest: PropTypes.func.isRequired
+  sendFriendRequest: PropTypes.func.isRequired,
 };
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { sendFriendRequest })(ProfileItem);

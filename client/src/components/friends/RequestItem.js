@@ -1,38 +1,33 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { acceptFriendRequest, cancelFriendRequest } from "../../actions/auth";
-import Spinner from "../layout/Spinner";
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { acceptFriendRequest, cancelFriendRequest } from '../../actions/auth';
+import Spinner from '../layout/Spinner';
 
-const RequestItem = ({
-  auth: { user, loading },
-  acceptFriendRequest,
-  cancelFriendRequest
-}) => {
+const RequestItem = ({ auth: { user, loading }, acceptFriendRequest, cancelFriendRequest }) => {
   return loading && user === null ? (
     <Spinner />
   ) : (
     user.request.map(req => (
-      <div className='profile bg-light'>
-        <img src={req.avatar} alt='' className='round-img' />
-        <div>
-          <h2>{req.username}</h2>
-
-          <Link to={`/profile/${req.userId}`} className='btn btn-primary'>
+      <div className="friend-card bg-light my-1">
+        <img src={req.avatar} alt="" className="round-img" />
+        <div className="friend-name-card m-1 p-1">
+          <p className="my-1">
+            <i className="fas fa-user-plus" /> {'  '}
+            {req.username}
+          </p>
+          <Link to={`/profile/${req.userId}`} className="btn btn-primary">
             View Profile
           </Link>
-          <button
-            className=' btn btn-success'
-            onClick={() => acceptFriendRequest(req.userId)}
-          >
-            Confirm
+        </div>
+        <div className="m">
+          <button className="btn btn-success m" onClick={() => acceptFriendRequest(req.userId)}>
+            <i className="fa fa-thumbs-up"></i>
+            {'  '}Confirm
           </button>
-          <button
-            className='btn btn-danger'
-            onClick={() => cancelFriendRequest(req.userId)}
-          >
-            Not Now
+          <button className="btn btn-danger m" onClick={() => cancelFriendRequest(req.userId)}>
+            <i className="fa fa-thumbs-down"></i> Reject
           </button>
         </div>
       </div>
@@ -42,13 +37,13 @@ const RequestItem = ({
 
 RequestItem.propTypes = {
   acceptFriendRequest: PropTypes.func.isRequired,
-  cancelFriendRequest: PropTypes.func.isRequired
+  cancelFriendRequest: PropTypes.func.isRequired,
 };
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, {
   acceptFriendRequest,
-  cancelFriendRequest
+  cancelFriendRequest,
 })(RequestItem);
