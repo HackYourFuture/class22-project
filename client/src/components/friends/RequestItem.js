@@ -14,7 +14,7 @@ const RequestItem = ({
     <Spinner />
   ) : (
     user.request.map(req => (
-      <div className='profile bg-light'>
+      <div className='profile bg-light' key={req._id}>
         <img src={req.avatar} alt='' className='round-img' />
         <div>
           <h2>{req.username}</h2>

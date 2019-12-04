@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -11,7 +11,7 @@ const WaitingItem = ({ auth: { user, loading } }) => {
     <Spinner />
   ) : (
     user.sentRequest.map(req => (
-      <div className='profile bg-light'>
+      <div className='profile bg-light' key={req._id}>
         <img src={req.avatar} alt='' className='round-img' />
         <div>
           <h2>{req.username}</h2>
@@ -35,7 +35,7 @@ const WaitingItem = ({ auth: { user, loading } }) => {
 };
 
 WaitingItem.propTypes = {
-  acceptFriendRequest: PropTypes.func.isRequired
+  auth: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth

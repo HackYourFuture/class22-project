@@ -4,16 +4,17 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { removeFriend } from "../../actions/auth";
 import Spinner from "../layout/Spinner";
+import uuid from "uuid";
 
 const FriendItem = ({ auth: { user, loading }, removeFriend }) => {
   return loading && user === null ? (
     <Spinner />
   ) : (
     user.friendsList.map(friend => (
-      <div className='profile bg-light'>
+      <div className='profile bg-light' key={uuid()}>
         <img src={friend.avatar} alt='' className='round-img' />
         <div>
-          <h2>{friend.firstName}</h2>
+          <h2>{friend.friendName}</h2>
 
           <Link to={`/profile/${friend.friendId}`} className='btn btn-primary'>
             View Profile
