@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { sendFriendRequest } from '../../actions/auth';
 import { socket } from '../../utils/socketClient';
 import moment from 'moment';
@@ -17,7 +17,7 @@ const ProfileItem = ({
     location,
     skills,
   },
-  auth: { user, loading, isAuthenticated },
+  auth: { user, loading, isAuthenticated }
 }) => {
   const handleClick = e => {
     e.preventDefault();
@@ -39,28 +39,31 @@ const ProfileItem = ({
     if (isAuthenticated) {
       if (isFriend.length > 0) {
         return (
-          <h4 className="text-primary">
-            {' '}
-            friends since: <Moment format="YYYY/MM/DD">{moment.utc(isFriend.date)}</Moment>
-          </h4>
+          <p className="text-primary my-1">
+            <i class="fas fa-clock"></i> Friends since:{' '}
+            <Moment format="DD/MM/YYYY HH:mm:ss">{moment.utc(isFriend.date)}</Moment>
+          </p>
         );
       }
 
       if (isRequested.length > 0) {
         return (
-          <h4 className="text-primary">
-            {' '}
-            Requested at: <Moment format="YYYY/MM/DD">{moment.utc(isRequested.date)}</Moment>
-          </h4>
+          <p className="text-primary my-1">
+            <i class="fas fa-clock"></i> Requested at:{' '}
+            <Moment format="DD/MM/YYYY HH:mm:ss">{moment.utc(isRequested.date)}</Moment>
+          </p>
         );
       }
 
       if (isSent.length > 0) {
         return (
-          <h4 className="text-primary">
+
+          <p className="text-primary my-1">
             {' '}
-            Request sent at: <Moment format="YYYY/MM/DD">{moment.utc(isSent.date)}</Moment>
-          </h4>
+            <i class="fas fa-clock"></i> Request sent at: {'   '}
+            <Moment format="DD/MM/YYYY HH:mm:ss">{moment.utc(isSent.date)}</Moment>
+          </p>
+
         );
       }
       console.log(isRequested);
@@ -71,9 +74,8 @@ const ProfileItem = ({
       }
 
       return (
-        <button className="btn btn-danger" onClick={handleClick}>
-          {' '}
-          Send Friend Request
+        <button className="btn btn-success" onClick={handleClick}>
+          <i class="fas fa-user-plus"></i> Send Friend Request
         </button>
       );
     }

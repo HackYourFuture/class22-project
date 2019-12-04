@@ -1,30 +1,33 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { removeFriend } from "../../actions/auth";
-import Spinner from "../layout/Spinner";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { removeFriend } from '../../actions/auth';
+import Spinner from '../layout/Spinner';
 
 const FriendItem = ({ auth: { user, loading }, removeFriend }) => {
   return loading && user === null ? (
     <Spinner />
   ) : (
     user.friendsList.map(friend => (
-      <div className='profile bg-light'>
-        <img src={friend.avatar} alt='' className='round-img' />
-        <div>
-          <h2>{friend.firstName}</h2>
-
-          <Link to={`/profile/${friend.friendId}`} className='btn btn-primary'>
+      <div className="friend-card bg-light my-1">
+        <img src={friend.avatar} alt="" className="round-img" />
+        <div className="friend-name-card m-1 p-1">
+          <p className="my-1">
+            <i className="fas fa-user" /> {friend.friendName}
+          </p>
+          <Link to={`/profile/${friend.friendId}`} className="btn btn-primary">
             View Profile
           </Link>
-
-          <button
-            className='btn btn-danger'
-            onClick={() => removeFriend(friend.friendId)}
-          >
-            Unfriend
+        </div>
+        <div className="m">
+          <button className="btn btn-danger m" onClick={() => removeFriend(friend.friendId)}>
+            <i class="fas fa-user-slash"></i>
+            {'  '}Unfriend
           </button>
+          <Link to={``} className="btn btn-primary m">
+            View Posts
+          </Link>
         </div>
       </div>
     ))
@@ -33,12 +36,12 @@ const FriendItem = ({ auth: { user, loading }, removeFriend }) => {
 
 FriendItem.propTypes = {
   removeFriend: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, {
-  removeFriend
+  removeFriend,
 })(FriendItem);
