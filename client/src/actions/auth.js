@@ -1,5 +1,5 @@
-import axios from "axios";
-import { setAlert } from "./alert";
+import axios from 'axios';
+import { setAlert } from './alert';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -8,9 +8,9 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_PROFILE
-} from "./types";
-import setAuthToken from "../utils/setAuthToken";
+  CLEAR_PROFILE,
+} from './types';
+import setAuthToken from '../utils/setAuthToken';
 
 // Load User
 export const loadUser = () => async dispatch => {
@@ -19,15 +19,15 @@ export const loadUser = () => async dispatch => {
   }
 
   try {
-    const res = await axios.get("/api/auth");
+    const res = await axios.get('/api/auth');
 
     dispatch({
       type: USER_LOADED,
-      payload: res.data
+      payload: res.data,
     });
   } catch (err) {
     dispatch({
-      type: AUTH_ERROR
+      type: AUTH_ERROR,
     });
   }
 };
@@ -36,18 +36,18 @@ export const loadUser = () => async dispatch => {
 export const register = ({ name, email, password }) => async dispatch => {
   const config = {
     headers: {
-      "Content-Type": "application/json"
-    }
+      'Content-Type': 'application/json',
+    },
   };
 
   const body = JSON.stringify({ name, email, password });
 
   try {
-    const res = await axios.post("/api/users", body, config);
+    const res = await axios.post('/api/users', body, config);
 
     dispatch({
       type: REGISTER_SUCCESS,
-      payload: res.data
+      payload: res.data,
     });
 
     dispatch(loadUser());
@@ -55,11 +55,11 @@ export const register = ({ name, email, password }) => async dispatch => {
     const errors = err.response.data.errors;
 
     if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
 
     dispatch({
-      type: REGISTER_FAIL
+      type: REGISTER_FAIL,
     });
   }
 };
@@ -68,18 +68,18 @@ export const register = ({ name, email, password }) => async dispatch => {
 export const login = (email, password) => async dispatch => {
   const config = {
     headers: {
-      "Content-Type": "application/json"
-    }
+      'Content-Type': 'application/json',
+    },
   };
 
   const body = JSON.stringify({ email, password });
 
   try {
-    const res = await axios.post("/api/auth", body, config);
+    const res = await axios.post('/api/auth', body, config);
 
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: res.data
+      payload: res.data,
     });
 
     dispatch(loadUser());
@@ -87,11 +87,11 @@ export const login = (email, password) => async dispatch => {
     const errors = err.response.data.errors;
 
     if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
     }
 
     dispatch({
-      type: LOGIN_FAIL
+      type: LOGIN_FAIL,
     });
   }
 };
@@ -108,9 +108,9 @@ export const sendFriendRequest = id => async dispatch => {
   try {
     const res = await axios.post(`/api/profile/friend/${id}`);
     dispatch(loadUser());
-    dispatch(setAlert(res.data.msg, "success"));
+    dispatch(setAlert(res.data.msg, 'success'));
   } catch (err) {
-    dispatch(setAlert(err.msg, "success"));
+    dispatch(setAlert(err.response.data.msg, 'danger'));
   }
 };
 // Accept Friend Request api/profile/friend/:senderId
@@ -118,9 +118,9 @@ export const acceptFriendRequest = id => async dispatch => {
   try {
     const res = await axios.put(`/api/profile/friend/${id}`);
     dispatch(loadUser());
-    dispatch(setAlert(res.data.msg, "success"));
+    dispatch(setAlert(res.data.msg, 'success'));
   } catch (err) {
-    dispatch(setAlert(err.msg, "success"));
+    dispatch(setAlert(err.response.data.msg, 'danger'));
   }
 };
 // Cancel Friend Request api/profile/friend/:senderId
@@ -128,9 +128,9 @@ export const cancelFriendRequest = id => async dispatch => {
   try {
     const res = await axios.patch(`/api/profile/friend/${id}`);
     dispatch(loadUser());
-    dispatch(setAlert(res.data.msg, "success"));
+    dispatch(setAlert(res.data.msg, 'success'));
   } catch (err) {
-    dispatch(setAlert(err.msg, "success"));
+    dispatch(setAlert(err.response.data.msg, 'danger'));
   }
 };
 // Remove Friend api/profile/friend/:senderId
@@ -138,8 +138,8 @@ export const removeFriend = id => async dispatch => {
   try {
     const res = await axios.delete(`/api/profile/friend/${id}`);
     dispatch(loadUser());
-    dispatch(setAlert(res.data.msg, "success"));
+    dispatch(setAlert(res.data.msg, 'success'));
   } catch (err) {
-    dispatch(setAlert(err.msg, "success"));
+    dispatch(setAlert(err.response.data.msg, 'danger'));
   }
 };
