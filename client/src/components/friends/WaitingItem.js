@@ -11,7 +11,7 @@ const WaitingItem = ({ auth: { user, loading } }) => {
     <Spinner />
   ) : (
     user.sentRequest.map(req => (
-      <div className='friend-card bg-light my-1'>
+      <div className='friend-card bg-light my-1' key={req._id}>
         <img src={req.avatar} alt='' className='round-img' />
         <div className='friend-name-card m-1 p-1'>
           <p className='my-1'>

@@ -10,7 +10,7 @@ const FriendItem = ({ auth: { user, loading }, removeFriend }) => {
     <Spinner />
   ) : (
     user.friendsList.map(friend => (
-      <div className='friend-card bg-light my-1'>
+      <div className='friend-card bg-light my-1' key={friend._id}>
         <img src={friend.avatar} alt='' className='round-img' />
         <div className='friend-name-card m-1 p-1'>
           <p className='my-1'>
