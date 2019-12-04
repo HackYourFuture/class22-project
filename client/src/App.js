@@ -10,6 +10,8 @@ import store from './store';
 import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
 
+import { socket } from './utils/socketClient';
+
 import './App.css';
 
 if (localStorage.token) {
@@ -18,8 +20,13 @@ if (localStorage.token) {
 
 const App = () => {
   useEffect(() => {
+    socket.on('newFriendRequest', data => {
+      store.dispatch(loadUser());
+      console.log(data);
+    });
     store.dispatch(loadUser());
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadUser]);
 
   return (
     <Provider store={store}>
@@ -27,7 +34,7 @@ const App = () => {
         <Fragment>
           <Navbar />
           <Switch>
-            <Route exact path='/' component={Landing} />
+            <Route exact path="/" component={Landing} />
             <Route component={Routes} />
           </Switch>
         </Fragment>

@@ -11,6 +11,7 @@ import {
   CLEAR_PROFILE,
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
+import { socket } from '../utils/socketClient';
 
 // Load User
 export const loadUser = () => async dispatch => {
@@ -25,6 +26,7 @@ export const loadUser = () => async dispatch => {
       type: USER_LOADED,
       payload: res.data,
     });
+    socket.emit('sendAuth', res.data._id);
   } catch (err) {
     dispatch({
       type: AUTH_ERROR,

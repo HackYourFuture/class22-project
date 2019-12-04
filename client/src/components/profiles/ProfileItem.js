@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendFriendRequest } from '../../actions/auth';
+import { socket } from '../../utils/socketClient';
 import moment from 'moment';
 import Moment from 'react-moment';
 
 const ProfileItem = ({
+  sendFriendRequest,
+  auth,
   profile: {
     user: { _id, name, avatar },
     status,
@@ -14,9 +17,19 @@ const ProfileItem = ({
     location,
     skills,
   },
-  auth: { user, loading, isAuthenticated },
-  sendFriendRequest,
+  auth: { user, loading, isAuthenticated }
 }) => {
+  const handleClick = e => {
+    e.preventDefault();
+    sendFriendRequest(_id);
+    socket.emit('friendRequest', {
+      senderId: auth.user._id,
+      senderName: auth.user.name,
+      receiverId: _id,
+      receiverName: name,
+    });
+  };
+
   const Button = () => {
     const isFriend = user.friendsList.filter(friend => friend.friendId === _id);
     const isRequested = user.request.filter(req => req.userId === _id);
@@ -44,11 +57,13 @@ const ProfileItem = ({
 
       if (isSent.length > 0) {
         return (
+
           <p className="text-primary my-1">
             {' '}
             <i class="fas fa-clock"></i> Request sent at: {'   '}
             <Moment format="DD/MM/YYYY HH:mm:ss">{moment.utc(isSent.date)}</Moment>
           </p>
+
         );
       }
       console.log(isRequested);
@@ -59,7 +74,7 @@ const ProfileItem = ({
       }
 
       return (
-        <button className="btn btn-success" onClick={() => sendFriendRequest(_id)}>
+        <button className="btn btn-success" onClick={handleClick}>
           <i class="fas fa-user-plus"></i> Send Friend Request
         </button>
       );
