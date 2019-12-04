@@ -14,32 +14,37 @@ const Friends = ({ auth: { user, loading } }) => {
   ) : (
     <Fragment>
       <h2 className='my-2'>My Friends</h2>
-      {/* {user.friendsList.length > 0 ? (
-        user.friendsList.map(friend => (
-          <FriendItem key={friend._id} id={friend.friendId} profile={profile} />
-        ))
+      {user.friendsList.length > 0 ? (
+        <FriendItem />
       ) : (
-        <></>
-      )} */}
+        <p className='text-primary'>You Don't Have Any Friends Yet</p>
+      )}
       <h2 className='my-2'>My Requests</h2>
-      {/* {user.request.length > 0 ? (
-        user.request.map(req => <RequestItem key={req._id} id={req.userId} />)
+
+      {user.request.length > 0 ? (
+        <RequestItem />
       ) : (
-        <></>
-      )} */}
+        <p className='text-primary'>You Didn't Receive Any Friend Request </p>
+      )}
       <h2 className='my-2'>My Waiting List</h2>
-      {user.sentRequest.length > 0 ? <WaitingItem /> : <></>}
+      {user.sentRequest.length > 0 ? (
+        <WaitingItem />
+      ) : (
+        <p className='text-primary'>Your Waiting List Is Empty</p>
+      )}
     </Fragment>
   );
 };
 
 Friends.propTypes = {
   loadUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  profile: state.profile
 });
 
 export default connect(mapStateToProps, { loadUser })(Friends);

@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { setAlert } from "../../actions/alert";
-import { acceptFriendRequest } from "../../actions/auth";
+import moment from "moment";
+import Moment from "react-moment";
 import Spinner from "../layout/Spinner";
 
 const WaitingItem = ({ auth: { user, loading } }) => {
@@ -13,27 +13,32 @@ const WaitingItem = ({ auth: { user, loading } }) => {
     user.sentRequest.map(req => (
       <div className='profile bg-light'>
         <img src={req.avatar} alt='' className='round-img' />
+        <div>
+          <h2>{req.username}</h2>
 
-        <h2>
-          {req.username} {req.date}
-        </h2>
-        <Link to={`/profile/${req.userId}`} className='btn btn-primary'>
-          View Profile
-        </Link>
-        <button className='btn btn-danger'>Cancel Request</button>
+          <Link to={`/profile/${req.userId}`} className='btn btn-primary'>
+            View Profile
+          </Link>
+        </div>
+        <ul>
+          <li className='text-primary'>
+            <button className='hide-sm btn btn-dark'>Request Sent</button>
+          </li>
+          <li>
+            at: {"   "}
+            <Moment format='YYYY/MM/DD'>{moment.utc(req.date)}</Moment>
+          </li>
+        </ul>
       </div>
     ))
   );
 };
 
 WaitingItem.propTypes = {
-  profile: PropTypes.object.isRequired,
   acceptFriendRequest: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, {
-  acceptFriendRequest
-})(WaitingItem);
+export default connect(mapStateToProps, {})(WaitingItem);

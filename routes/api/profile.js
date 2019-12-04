@@ -511,7 +511,7 @@ router.put("/friend/:senderId", auth, async (req, res) => {
         friendId: req.user.id,
         friendName: receiver.name,
         // add avatar
-        avatar: avatar
+        avatar: receiver.avatar
       });
       // Remove Receiver info from Sender senrRequest database because they are going to be friend
       const getReceiverId = sender.sentRequest
