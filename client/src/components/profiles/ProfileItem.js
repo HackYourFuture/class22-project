@@ -17,7 +17,7 @@ const ProfileItem = ({
     location,
     skills,
   },
-  auth: { user, loading, isAuthenticated }
+  auth: { user, loading, isAuthenticated },
 }) => {
   const handleClick = e => {
     e.preventDefault();
@@ -51,18 +51,14 @@ const ProfileItem = ({
 
       if (isSent.length > 0) {
         return (
-
           <p className="text-primary my-1">
             {' '}
             <i class="fas fa-clock"></i> Request sent at: {'   '}
             <Moment format="DD/MM/YYYY HH:mm:ss">{moment.utc(isSent.date)}</Moment>
           </p>
-
         );
       }
-      console.log(isRequested);
-      console.log(isFriend);
-      console.log(isSent);
+
       if (_id === user._id) {
         return <></>;
       }

@@ -12,30 +12,35 @@ const {
 
 io.on('connection', socket => {
   console.log('New WebSocket connection', socket.id);
-
   socket.on('sendAuth', senderId => {
     addSocketClient({ id: socket.id, senderId });
   });
 
-  socket.on('friendRequest', ({ senderName, senderId, receiverName, receiverId }) => {
-    const socketClient = getSocketClient(socket.id);
-    socketClient.senderName = senderName;
-    socketClient.senderId = senderId;
-    socketClient.receiverName = receiverName;
-    socketClient.receiverId = receiverId;
+  socket.on(
+    'sendFriendAction',
+    ({ senderName, senderId, receiverName, receiverId, eventType, notification }) => {
+      const socketClient = getSocketClient(socket.id);
+      socketClient.senderName = senderName;
+      socketClient.senderId = senderId;
+      socketClient.receiverName = receiverName;
+      socketClient.receiverId = receiverId;
+      socketClient.eventType = eventType;
 
-    const { socketClientId, error } = getReceiverSocketId(socketClient.receiverId);
-
-    if (!error) {
-      io.to(socketClientId).emit('newFriendRequest', {
-        socketClientId,
-        senderId,
-        senderName,
-        receiverId,
-        receiverName,
-      });
-    }
-  });
+      const { socketClientId, error } = getReceiverSocketId(socketClient.receiverId);
+      const event = socketClient.eventType;
+      if (!error) {
+        io.to(socketClientId).emit(event, {
+          socketClientId,
+          senderId,
+          senderName,
+          receiverId,
+          receiverName,
+          eventType,
+          notification,
+        });
+      }
+    },
+  );
 
   socket.on('disconnect', function() {
     removeSocketClient(socket.id);

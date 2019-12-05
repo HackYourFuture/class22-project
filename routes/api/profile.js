@@ -444,6 +444,7 @@ router.post('/friend/:id', auth, async (req, res) => {
         receiverName: receiver.name,
         receiverAvatar: receiver.avatar,
         msg: `Your friend request is successfully sent to ${receiver.name}`,
+        notification: `${sender.name} has sent a friend request`,
       }); // @Todo
     }
 
@@ -509,7 +510,16 @@ router.put('/friend/:senderId', auth, async (req, res) => {
       sender.sentRequest.splice(getReceiverId, 1);
 
       await sender.save();
-      return res.json({ msg: `You have accepted ${sender.name} as a friend` }); // @Todo
+      return res.json({
+        receiverId: req.params.senderId,
+        receiverName: sender.name,
+        receiverAvatar: sender.avatar,
+        senderId: req.user.id,
+        senderName: receiver.name,
+        senderAvatar: receiver.avatar,
+        msg: `You have accepted ${sender.name} as a friend`,
+        notification: `${receiver.name} has accepted your friend request`,
+      }); // @Todo
     }
 
     return res.status(500).json({ msg: 'Server error' });
@@ -558,7 +568,14 @@ router.patch('/friend/:senderId', auth, async (req, res) => {
       sender.sentRequest.splice(getReceiverId, 1);
       await sender.save();
       return res.json({
+        receiverId: req.params.senderId,
+        receiverName: sender.name,
+        receiverAvatar: sender.avatar,
+        senderId: req.user.id,
+        senderName: receiver.name,
+        senderAvatar: receiver.avatar,
         msg: `You have rejected ${sender.name} friend request`,
+        notification: `${receiver.name} has rejected your friend request`,
       }); // @Todo
     }
     return res.status(500).json({ msg: 'Server error' });
@@ -605,7 +622,16 @@ router.delete('/friend/:senderId', auth, async (req, res) => {
       sender.friendsList.splice(getReceiverId, 1);
 
       await sender.save();
-      return res.json({ msg: `You are not a friend with ${sender.name} ` }); // @Todo
+      return res.json({
+        receiverId: req.params.senderId,
+        receiverName: sender.name,
+        receiverAvatar: sender.avatar,
+        senderId: req.user.id,
+        senderName: receiver.name,
+        senderAvatar: receiver.avatar,
+        msg: `You are not a friend with ${sender.name}`,
+        notification: `${receiver.name} is not a friend of you`,
+      }); // @Todo
     }
 
     return res.status(500).json({ msg: 'Server error' });
