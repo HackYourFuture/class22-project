@@ -31,7 +31,7 @@ const FriendPosts = ({
       <p className='lead'>
         <i className='fas fa-user' /> Welcome {user.name}
       </p>
-      <PostForm />
+
       <div className='posts'>
         {friendPosts.map(post => (
           <PostItem key={post._id} post={post} />
