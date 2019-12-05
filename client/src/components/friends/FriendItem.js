@@ -10,21 +10,27 @@ const FriendItem = ({ auth: { user, loading }, removeFriend }) => {
     <Spinner />
   ) : (
     user.friendsList.map(friend => (
-      <div className='profile bg-light'>
+      <div className='friend-card bg-light my-1' key={friend._id}>
         <img src={friend.avatar} alt='' className='round-img' />
-        <div>
-          <h2>{friend.firstName}</h2>
-
+        <div className='friend-name-card m-1 p-1'>
+          <p className='my-1'>
+            <i className='fas fa-user' /> {friend.friendName}
+          </p>
           <Link to={`/profile/${friend.friendId}`} className='btn btn-primary'>
             View Profile
           </Link>
-
+        </div>
+        <div className='m'>
           <button
-            className='btn btn-danger'
+            className='btn btn-danger m'
             onClick={() => removeFriend(friend.friendId)}
           >
-            Unfriend
+            <i class='fas fa-user-slash'></i>
+            {"  "}Unfriend
           </button>
+          <Link to={``} className='btn btn-primary m'>
+            View Posts
+          </Link>
         </div>
       </div>
     ))

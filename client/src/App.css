@@ -488,6 +488,25 @@ button {
   margin-bottom: 0.5rem;
 }
 
+/* Friends Page */
+.friend-card {
+  border: #ccc solid 1px;
+  background: var(--light-color);
+  display: grid;
+  grid-template-columns: 1fr 5fr 2fr;
+  align-items: center;
+  grid-gap: 0rem;
+  padding: 0.5rem 1rem;
+  line-height: 1.3;
+}
+
+.friend-name-card {
+  border-right: #ccc solid 1px;
+  border-left: #ccc solid 1px;
+  font-size: 1.2rem;
+  padding-left: 2rem;
+}
+
 /* Mobile Styles */
 @media (max-width: 700px) {
   .container {
@@ -573,5 +592,22 @@ button {
   .post a,
   .post button {
     padding: 0.3rem 0.4rem;
+  }
+
+  /* Friends page */
+  .friend-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    align-items: left;
+    padding: 0.5rem;
+  }
+
+  .friend-card img {
+    width: 25%;
+    margin: 0.5rem auto;
+  }
+
+  .friend-name-card {
+    border: #ccc solid 1px;
   }
 }
