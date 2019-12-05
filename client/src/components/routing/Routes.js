@@ -13,6 +13,7 @@ import Profile from "../profile/Profile";
 import Friends from "../friends/Friends";
 import Posts from "../posts/Posts";
 import Post from "../post/Post";
+import FriendPosts from "../posts/FriendPosts";
 import NotFound from "../layout/NotFound";
 import PrivateRoute from "../routing/PrivateRoute";
 
@@ -33,6 +34,11 @@ const Routes = () => {
         <PrivateRoute exact path='/add-education' component={AddEducation} />
         <PrivateRoute exact path='/posts' component={Posts} />
         <PrivateRoute exact path='/posts/:id' component={Post} />
+        <PrivateRoute
+          exact
+          path='/friend-posts/:userId'
+          component={FriendPosts}
+        />
         <Route component={NotFound} />
       </Switch>
     </section>
