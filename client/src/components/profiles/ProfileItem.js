@@ -43,7 +43,7 @@ const ProfileItem = ({
       if (isRequested.length > 0) {
         return (
           <p className="text-primary my-1">
-            <i class="fas fa-clock"></i> Requested at:{' '}
+            <i className="fas fa-clock"></i> Requested at:{' '}
             <Moment format="DD/MM/YYYY HH:mm:ss">{moment.utc(isRequested.date)}</Moment>
           </p>
         );
@@ -53,7 +53,7 @@ const ProfileItem = ({
         return (
           <p className="text-primary my-1">
             {' '}
-            <i class="fas fa-clock"></i> Request sent at: {'   '}
+            <i className="fas fa-clock"></i> Request sent at: {'   '}
             <Moment format="DD/MM/YYYY HH:mm:ss">{moment.utc(isSent.date)}</Moment>
           </p>
         );
@@ -65,7 +65,7 @@ const ProfileItem = ({
 
       return (
         <button className="btn btn-success" onClick={handleClick}>
-          <i class="fas fa-user-plus"></i> Send Friend Request
+          <i className="fas fa-user-plus"></i> Send Friend Request
         </button>
       );
     }

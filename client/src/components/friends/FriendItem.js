@@ -25,10 +25,13 @@ const FriendItem = ({ auth: { user, loading }, removeFriend }) => {
             className='btn btn-danger m'
             onClick={() => removeFriend(friend.friendId)}
           >
-            <i class='fas fa-user-slash'></i>
+            <i className='fas fa-user-slash'></i>
             {"  "}Unfriend
           </button>
-          <Link to={``} className='btn btn-primary m'>
+          <Link
+            to={`/friend-posts/${friend.friendId}`}
+            className='btn btn-primary m'
+          >
             View Posts
           </Link>
         </div>
