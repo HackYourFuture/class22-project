@@ -9,7 +9,7 @@ import { Provider } from "react-redux";
 import store from "./store";
 import { loadUser } from "./actions/auth";
 import setAuthToken from "./utils/setAuthToken";
-
+import { setAlert } from "./actions/alert";
 import { socket } from "./utils/socketClient";
 
 import "./App.css";
@@ -23,6 +23,13 @@ const App = () => {
     socket.on("newFriendRequest", data => {
       store.dispatch(loadUser());
       console.log(data);
+
+      store.dispatch(
+        setAlert(
+          `user ${data.senderName} send friend request to you`,
+          "success"
+        )
+      );
     });
     store.dispatch(loadUser());
     // eslint-disable-next-line react-hooks/exhaustive-deps

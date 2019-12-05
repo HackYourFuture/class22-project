@@ -16,7 +16,7 @@ const WaitingItem = ({ auth: { user, loading } }) => {
         <div className='friend-name-card m-1 p-1'>
           <p className='my-1'>
             {" "}
-            <i class='fas fa-user-clock'></i> {req.username}
+            <i className='fas fa-user-clock'></i> {req.username}
           </p>
           <Link to={`/profile/${req.userId}`} className='btn btn-primary'>
             View Profile
@@ -25,12 +25,12 @@ const WaitingItem = ({ auth: { user, loading } }) => {
         <ul className='text-primary'>
           <li>
             <button className='btn btn-dark'>
-              <i class='fas fa-hourglass-half'></i>
+              <i className='fas fa-hourglass-half'></i>
               {"   "} Cancel Request
             </button>
           </li>
           <li className='my-1'>
-            <i class='fas fa-clock'></i> Request sent at: {"   "}
+            <i className='fas fa-clock'></i> Request sent at: {"   "}
             <Moment format='DD/MM/YYYY HH:mm:ss'>{moment.utc(req.date)}</Moment>
           </li>
         </ul>

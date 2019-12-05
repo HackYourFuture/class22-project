@@ -25,7 +25,7 @@ const FriendItem = ({ auth: { user, loading }, removeFriend }) => {
             className='btn btn-danger m'
             onClick={() => removeFriend(friend.friendId)}
           >
-            <i class='fas fa-user-slash'></i>
+            <i className='fas fa-user-slash'></i>
             {"  "}Unfriend
           </button>
           <Link
