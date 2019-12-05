@@ -437,6 +437,12 @@ router.post('/friend/:id', auth, async (req, res) => {
 
       await receiver.save();
       return res.json({
+        senderId: req.user.id,
+        senderName: sender.name,
+        senderAvatar: sender.avatar,
+        receiverId: req.params.id,
+        receiverName: receiver.name,
+        receiverAvatar: receiver.avatar,
         msg: `Your friend request is successfully sent to ${receiver.name}`,
       }); // @Todo
     }

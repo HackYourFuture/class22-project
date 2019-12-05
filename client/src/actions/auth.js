@@ -109,6 +109,13 @@ export const logout = () => dispatch => {
 export const sendFriendRequest = id => async dispatch => {
   try {
     const res = await axios.post(`/api/profile/friend/${id}`);
+
+    socket.emit('friendRequest', {
+      senderId: res.data.senderId,
+      senderName: res.data.senderName,
+      receiverId: res.data.receiverId,
+      receiverName: res.data.receiverName,
+    });
     dispatch(loadUser());
     dispatch(setAlert(res.data.msg, 'success'));
   } catch (err) {

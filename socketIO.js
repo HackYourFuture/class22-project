@@ -25,7 +25,6 @@ io.on('connection', socket => {
     socketClient.receiverId = receiverId;
 
     const { socketClientId, error } = getReceiverSocketId(socketClient.receiverId);
-    console.log('status', socketClient, error);
 
     if (!error) {
       io.to(socketClientId).emit('newFriendRequest', {

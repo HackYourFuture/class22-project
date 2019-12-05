@@ -22,12 +22,6 @@ const ProfileItem = ({
   const handleClick = e => {
     e.preventDefault();
     sendFriendRequest(_id);
-    socket.emit('friendRequest', {
-      senderId: auth.user._id,
-      senderName: auth.user.name,
-      receiverId: _id,
-      receiverName: name,
-    });
   };
 
   const Button = () => {
