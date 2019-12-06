@@ -27,7 +27,7 @@ const ProfileItem = ({
       if (isFriend.length > 0) {
         return (
           <p className='text-primary my-1'>
-            <i class='fas fa-clock'></i> Friends since:{" "}
+            <i className='fas fa-clock'></i> Friends since:{" "}
             <Moment format='DD/MM/YYYY HH:mm:ss'>
               {moment.utc(isFriend.date)}
             </Moment>

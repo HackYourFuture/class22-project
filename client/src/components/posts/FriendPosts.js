@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../layout/Spinner";
 import PostItem from "./PostItem";
-import PostForm from "./PostForm";
 import { getPosts } from "../../actions/post";
 
 const FriendPosts = ({
@@ -17,9 +16,6 @@ const FriendPosts = ({
   }, [getPosts]);
 
   const friendPosts = posts.filter(post => post.user === match.params.userId);
-
-  console.log(user);
-  console.log(friendPosts);
 
   return loading ? (
     <Spinner />

@@ -26,7 +26,7 @@ const WaitingItem = ({ auth: { user, loading } }) => {
           <li>
             <button className='btn btn-dark'>
               <i className='fas fa-hourglass-half'></i>
-              {"   "} Cancel Request
+              {"   "} Pending Request
             </button>
           </li>
           <li className='my-1'>
