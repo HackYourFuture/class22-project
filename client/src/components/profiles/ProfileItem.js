@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { sendFriendRequest } from "../../actions/auth";
-import { socket } from "../../utils/socketClient";
 import moment from "moment";
 import Moment from "react-moment";
 
@@ -16,7 +15,7 @@ const ProfileItem = ({
     location,
     skills
   },
-  auth: { user, loading, isAuthenticated }
+  auth: { user, isAuthenticated }
 }) => {
   const handleClick = e => {
     e.preventDefault();
@@ -105,7 +104,8 @@ const ProfileItem = ({
 ProfileItem.propTypes = {
   profile: PropTypes.object.isRequired,
   isAuthenticated: PropTypes.bool,
-  sendFriendRequest: PropTypes.func.isRequired
+  sendFriendRequest: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth

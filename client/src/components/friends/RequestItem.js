@@ -21,10 +21,9 @@ const RequestItem = ({
             <i className='fas fa-user-plus' /> {"  "}
             {req.username}
           </p>
-          <Link
-            to={`/profile/${req.userId}`}
-            className='btn btn-primary'
-          ></Link>
+          <Link to={`/profile/${req.userId}`} className='btn btn-primary'>
+            View Profile
+          </Link>
         </div>
         <div className='m'>
           <button
@@ -48,7 +47,8 @@ const RequestItem = ({
 
 RequestItem.propTypes = {
   acceptFriendRequest: PropTypes.func.isRequired,
-  cancelFriendRequest: PropTypes.func.isRequired
+  cancelFriendRequest: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth
