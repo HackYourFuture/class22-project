@@ -9,10 +9,11 @@ const addSocketClient = ({ id, senderName, senderId, receiverName, receiverId })
 };
 
 const removeSocketClient = id => {
-  const index = socketClients.findIndex(socket => socket.id === id);
-
-  if (index !== -1) {
-    return socketClients.splice(index, 1)[0];
+  for (let i = 0; i < socketClients.length; i++) {
+    if (socketClients[i].id === id) {
+      socketClients.splice(i, 1);
+      i--;
+    }
   }
 };
 

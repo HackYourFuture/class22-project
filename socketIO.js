@@ -25,7 +25,7 @@ io.on('connection', socket => {
       socketClient.receiverName = receiverName;
       socketClient.receiverId = receiverId;
       socketClient.eventType = eventType;
-
+      console.log(socketClient);
       const { socketClientId, error } = getReceiverSocketId(socketClient.receiverId);
       const event = socketClient.eventType;
       if (!error) {
