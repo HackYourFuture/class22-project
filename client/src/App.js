@@ -22,18 +22,22 @@ if (localStorage.token) {
 const App = () => {
   useEffect(() => {
     socket.on('sendFriendRequest', data => {
+      console.log(data);
       store.dispatch(loadUser());
       store.dispatch(setAlert(data.notification, 'info'));
     });
     socket.on('cancelFriendRequest', data => {
+      console.log(data);
       store.dispatch(loadUser());
       store.dispatch(setAlert(data.notification, 'info'));
     });
     socket.on('acceptFriendRequest', data => {
+      console.log(data);
       store.dispatch(loadUser());
       store.dispatch(setAlert(data.notification, 'success'));
     });
     socket.on('removeFriend', data => {
+      console.log(data);
       store.dispatch(loadUser());
       store.dispatch(setAlert(data.notification, 'danger'));
     });
