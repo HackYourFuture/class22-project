@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { sendFriendRequest } from '../../actions/auth';
-import { socket } from '../../utils/socketClient';
 import moment from 'moment';
 import Moment from 'react-moment';
 
@@ -19,11 +18,6 @@ const ProfileItem = ({
   },
   auth: { user, loading, isAuthenticated },
 }) => {
-  const handleClick = e => {
-    e.preventDefault();
-    sendFriendRequest(_id);
-  };
-
   const Button = () => {
     const isFriend = user.friendsList.filter(friend => friend.friendId === _id);
     const isRequested = user.request.filter(req => req.userId === _id);
@@ -64,7 +58,7 @@ const ProfileItem = ({
       }
 
       return (
-        <button className="btn btn-success" onClick={handleClick}>
+        <button className="btn btn-success" onClick={() => sendFriendRequest(_id)}>
           <i className="fas fa-user-plus"></i> Send Friend Request
         </button>
       );

@@ -15,6 +15,11 @@ const removeSocketClient = id => {
       i--;
     }
   }
+  const onlineUsers = new Set();
+  socketClients.forEach(client => {
+    onlineUsers.add(client.senderId);
+  });
+  return Array.from(onlineUsers);
 };
 
 const getSocketClient = id => socketClients.find(socket => socket.id === id);
