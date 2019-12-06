@@ -25,7 +25,6 @@ io.on('connection', socket => {
       socketClient.receiverName = receiverName;
       socketClient.receiverId = receiverId;
       socketClient.eventType = eventType;
-      console.log(socketClient);
       const { socketClientId, error } = getReceiverSocketId(socketClient.receiverId);
       const event = socketClient.eventType;
       if (!error) {
@@ -43,7 +42,9 @@ io.on('connection', socket => {
   );
 
   socket.on('disconnect', function() {
-    removeSocketClient(socket.id);
+    const onlineUsers = removeSocketClient(socket.id);
+    // If you want to send onlineUsers to front-end
+    // io.emit('onlineUsers', { onlineUsers });
     console.log('user disconnected');
   });
 });

@@ -11,7 +11,7 @@ import {
   CLEAR_PROFILE,
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
-import { socket } from '../utils/socketClient';
+import { socketEmit, socketActions } from '../utils/socketClient';
 
 // Load User
 export const loadUser = () => async dispatch => {
@@ -26,7 +26,7 @@ export const loadUser = () => async dispatch => {
       type: USER_LOADED,
       payload: res.data,
     });
-    socket.emit('sendAuth', res.data._id);
+    socketEmit(res);
   } catch (err) {
     dispatch({
       type: AUTH_ERROR,
@@ -110,14 +110,7 @@ export const sendFriendRequest = id => async dispatch => {
   try {
     const res = await axios.post(`/api/profile/friend/${id}`);
 
-    socket.emit('sendFriendAction', {
-      senderId: res.data.senderId,
-      senderName: res.data.senderName,
-      receiverId: res.data.receiverId,
-      receiverName: res.data.receiverName,
-      eventType: 'sendFriendRequest',
-      notification: res.data.notification,
-    });
+    socketActions(res, 'sendFriendRequest');
     dispatch(loadUser());
     dispatch(setAlert(res.data.msg, 'success'));
   } catch (err) {
@@ -128,14 +121,7 @@ export const sendFriendRequest = id => async dispatch => {
 export const acceptFriendRequest = id => async dispatch => {
   try {
     const res = await axios.put(`/api/profile/friend/${id}`);
-    socket.emit('sendFriendAction', {
-      senderId: res.data.senderId,
-      senderName: res.data.senderName,
-      receiverId: res.data.receiverId,
-      receiverName: res.data.receiverName,
-      eventType: 'acceptFriendRequest',
-      notification: res.data.notification,
-    });
+    socketActions(res, 'acceptFriendRequest');
     dispatch(loadUser());
     dispatch(setAlert(res.data.msg, 'success'));
   } catch (err) {
@@ -146,14 +132,7 @@ export const acceptFriendRequest = id => async dispatch => {
 export const cancelFriendRequest = id => async dispatch => {
   try {
     const res = await axios.patch(`/api/profile/friend/${id}`);
-    socket.emit('sendFriendAction', {
-      senderId: res.data.senderId,
-      senderName: res.data.senderName,
-      receiverId: res.data.receiverId,
-      receiverName: res.data.receiverName,
-      eventType: 'cancelFriendRequest',
-      notification: res.data.notification,
-    });
+    socketActions(res, 'cancelFriendRequest');
     dispatch(loadUser());
     dispatch(setAlert(res.data.msg, 'success'));
   } catch (err) {
@@ -164,14 +143,7 @@ export const cancelFriendRequest = id => async dispatch => {
 export const removeFriend = id => async dispatch => {
   try {
     const res = await axios.delete(`/api/profile/friend/${id}`);
-    socket.emit('sendFriendAction', {
-      senderId: res.data.senderId,
-      senderName: res.data.senderName,
-      receiverId: res.data.receiverId,
-      receiverName: res.data.receiverName,
-      eventType: 'removeFriend',
-      notification: res.data.notification,
-    });
+    socketActions(res, 'removeFriend');
     dispatch(loadUser());
     dispatch(setAlert(res.data.msg, 'success'));
   } catch (err) {

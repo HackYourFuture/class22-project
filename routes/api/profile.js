@@ -420,7 +420,6 @@ router.post('/friend/:id', auth, async (req, res) => {
       sender.sentRequest.push({
         userId: req.params.id,
         username: receiver.name,
-        // added avatar
         avatar: receiver.avatar,
       });
 
@@ -429,7 +428,6 @@ router.post('/friend/:id', auth, async (req, res) => {
       receiver.request.push({
         userId: req.user.id,
         username: sender.name,
-        // added avatar
         avatar: sender.avatar,
       });
       // Increment total request in the receiver database
@@ -463,7 +461,6 @@ router.post('/friend/:id', auth, async (req, res) => {
 router.put('/friend/:senderId', auth, async (req, res) => {
   try {
     const receiver = await User.findById(req.user.id).select('-password');
-
     const sender = await User.findById(req.params.senderId).select('-password');
 
     const isFriend = receiver.friendsList.find(
@@ -484,7 +481,6 @@ router.put('/friend/:senderId', auth, async (req, res) => {
       receiver.friendsList.push({
         friendId: req.params.senderId,
         friendName: sender.name,
-        // add avatar
         avatar: sender.avatar,
       });
       // Remove sender info from Receiver request database because they are going to be friend
@@ -499,7 +495,6 @@ router.put('/friend/:senderId', auth, async (req, res) => {
       sender.friendsList.push({
         friendId: req.user.id,
         friendName: receiver.name,
-        // add avatar
         avatar: receiver.avatar,
       });
       // Remove Receiver info from Sender senrRequest database because they are going to be friend

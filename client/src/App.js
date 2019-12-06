@@ -9,10 +9,7 @@ import { Provider } from 'react-redux';
 import store from './store';
 import { loadUser } from './actions/auth';
 import setAuthToken from './utils/setAuthToken';
-
-import { socket } from './utils/socketClient';
-import { setAlert } from './actions/alert';
-
+import { socketClient } from './utils/socketClient';
 import './App.css';
 
 if (localStorage.token) {
@@ -21,26 +18,7 @@ if (localStorage.token) {
 
 const App = () => {
   useEffect(() => {
-    socket.on('sendFriendRequest', data => {
-      console.log(data);
-      store.dispatch(loadUser());
-      store.dispatch(setAlert(data.notification, 'info'));
-    });
-    socket.on('cancelFriendRequest', data => {
-      console.log(data);
-      store.dispatch(loadUser());
-      store.dispatch(setAlert(data.notification, 'info'));
-    });
-    socket.on('acceptFriendRequest', data => {
-      console.log(data);
-      store.dispatch(loadUser());
-      store.dispatch(setAlert(data.notification, 'success'));
-    });
-    socket.on('removeFriend', data => {
-      console.log(data);
-      store.dispatch(loadUser());
-      store.dispatch(setAlert(data.notification, 'danger'));
-    });
+    socketClient();
     store.dispatch(loadUser());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadUser]);
