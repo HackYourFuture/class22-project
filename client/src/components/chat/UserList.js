@@ -12,7 +12,7 @@ const UserList = ({ chatData: { messages, userlist, username } }) => {
         <img
           src={chatUser.userAvatar}
           alt={chatUser.username + ' avatar'}
-          className="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1"
+          className="avatar rounded-circle d-none d-sm-flex align-self-center mr-2 z-depth-1"
         />
         <div className="text-small">
           <strong className="chat-user">{chatUser.username}</strong>

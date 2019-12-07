@@ -491,7 +491,7 @@ button {
 /* Mobile Styles */
 @media (max-width: 700px) {
   .container {
-    margin-top: 8rem;
+    margin-top: 7rem;
   }
 
   .hide-sm {
@@ -704,4 +704,19 @@ div.header {
 .chat-send-button:hover {
   color: white;
   background-color: #343a40;
+}
+
+@media (max-width:767px){
+  h1{
+    font-size: 20px;
+  }
+  .container{
+    min-width: 620px;
+  }
+  .chat-message{
+    margin-right: 140px;
+  }
+  .chat-user-container{
+    top: 95px;
+  }
 }
