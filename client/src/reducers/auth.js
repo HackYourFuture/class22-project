@@ -7,14 +7,16 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   ACCOUNT_DELETED,
-  CONFIRM_EMAIL,
-} from '../actions/types';
+  SOCIAL_SUCCESS,
+  SOCIAL_USER_LOADED,
+  CONFIRM_EMAIL
+} from "../actions/types";
 
 const initialState = {
-  token: localStorage.getItem('token'),
+  token: localStorage.getItem("token"),
   isAuthenticated: null,
   loading: true,
-  user: null,
+  user: null
 };
 
 export default function(state = initialState, action) {
@@ -26,34 +28,49 @@ export default function(state = initialState, action) {
         ...state,
         isAuthenticated: true,
         loading: false,
-        user: payload,
+        user: payload
+      };
+    case SOCIAL_USER_LOADED:
+      return {
+        ...state,
+        isAuthenticated: true,
+        loading: false,
+        user: payload
       };
     case REGISTER_SUCCESS:
       return {
         ...state,
         isAuthenticated: false,
-        loading: false,
+        loading: false
       };
     case LOGIN_SUCCESS:
     case CONFIRM_EMAIL:
-      localStorage.setItem('token', payload.token);
+      localStorage.setItem("token", payload.token);
       return {
         ...state,
         ...payload,
         isAuthenticated: true,
-        loading: false,
+        loading: false
+      };
+    case SOCIAL_SUCCESS:
+      localStorage.setItem("token", payload.token);
+      return {
+        ...state,
+        ...payload,
+        isAuthenticated: true,
+        loading: false
       };
     case REGISTER_FAIL:
     case AUTH_ERROR:
     case LOGIN_FAIL:
     case LOGOUT:
     case ACCOUNT_DELETED:
-      localStorage.removeItem('token');
+      localStorage.removeItem("token");
       return {
         ...state,
         token: null,
         isAuthenticated: false,
-        loading: false,
+        loading: false
       };
     default:
       return state;

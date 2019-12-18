@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-globals */
-const CACHE_VERSION = 1;
+const CACHE_VERSION = 7;
 const CURRENT_CACHES = {
   static: `static-v${CACHE_VERSION}`,
   dynamic: `dynamic-v${CACHE_VERSION}`,
@@ -8,8 +8,8 @@ const STATIC_FILES = [
   '/',
   '/index.html',
   '/offline.html',
-  '/static/media/showcase.4b31330b.jpg',
   '/static/js/bundle.js',
+  '/static/media/showcase.70190ae3.jpg',
   '/static/js/0.chunk.js',
   '/static/js/main.chunk.js',
   '/static/js/main.chunk.js.map',
@@ -71,21 +71,10 @@ const isStaticAsset = (requestUrl, array) => {
   return array.indexOf(cachePath) > -1;
 };
 
-const apis = [`${self.location.origin}/api/profile`];
-
 // Cache then network with fallback & dynamic caching
 self.addEventListener('fetch', event => {
-  if (apis.includes(event.request.url)) {
-    event.respondWith(
-      caches.open(CURRENT_CACHES.dynamic).then(cache => {
-        return fetch(event.request).then(response => {
-          const cloneResponse = response.clone();
-          trimCache(CURRENT_CACHES.dynamic, 30);
-          cache.put(event.request.url, cloneResponse);
-          return response;
-        });
-      }),
-    );
+  if (event.request.url.includes('/api/') || event.request.url.includes('sock')) {
+    event.respondWith(fetch(event.request));
   } else if (isStaticAsset(event.request.url, STATIC_FILES)) {
     event.respondWith(caches.match(event.request));
   } else {
